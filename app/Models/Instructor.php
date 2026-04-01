@@ -22,7 +22,8 @@ class Instructor extends Model
         'ModifiedDate'
     ];
 
-    public function InstructorCount() { 
-        return DB::statement('CALL sp_InstructorsCount()');
+    public static function instructorCount(): mixed
+    {
+        return DB::selectOne('CALL sp_InstructorsCount()');
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Instructor;
 
 class InstructorController extends Controller
 {
     private $InstructorModel;
+
     public function __construct()
     {
         $this->InstructorModel = new Instructor;
@@ -15,10 +15,10 @@ class InstructorController extends Controller
 
     public function index()
     {
-        $InstructorsCount = $this->InstructorModel->InstructorCount();
+        $instructorsCount = $this->InstructorModel->InstructorCount()->InstructorsCount ?? 0;
 
         return view('dashboard', [
-            'InstructorsCount' => $InstructorsCount
+            'instructorsCount' => $instructorsCount,
         ]);
     }
 }

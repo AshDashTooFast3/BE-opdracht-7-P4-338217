@@ -13,7 +13,7 @@
                         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <span class="text-lg font-medium">{{ __('Aantal instructeurs in dienst:') }}</span>
                             <span
-                                class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $InstructorsCount }}</span>
+                                class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $instructorsCount }}</span>
                         </div>
                     </div>
                 </div>
