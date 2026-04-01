@@ -11,67 +11,67 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('
-            CREATE TABLE IF NOT EXISTS TypeVoertuig (
+            CREATE TABLE IF NOT EXISTS VehicleType (
                 Id                 INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-                ,TypeVoertuig       VARCHAR(50)  NOT NULL
-                ,Rijbewijscategorie CHAR(3)      NOT NULL
-                ,IsActief           BOOLEAN      NOT NULL DEFAULT 1
-                ,Opmerking          VARCHAR(255)
-                ,DatumAangemaakt    DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,DatumGewijzigd     DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,VehicleType       VARCHAR(50)  NOT NULL
+                ,LicenseCategory   CHAR(3)      NOT NULL
+                ,IsActive          BOOLEAN      NOT NULL DEFAULT 1
+                ,Remark            VARCHAR(255)
+                ,CreatedDate       DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,ModifiedDate      DATETIME(6)  NOT NULL DEFAULT NOW(6)
             )
         ');
 
         DB::statement('
-            CREATE TABLE IF NOT EXISTS Voertuig (
+            CREATE TABLE IF NOT EXISTS Vehicle (
                 Id               INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-                ,Kenteken         VARCHAR(10)  NOT NULL UNIQUE
-                ,Type             VARCHAR(50)  NOT NULL
-                ,Bouwjaar         DATE         NOT NULL
-                ,Brandstof        VARCHAR(20)  NOT NULL 
-                ,TypeVoertuigId   INTEGER      NOT NULL
-                ,IsActief         BOOLEAN      NOT NULL DEFAULT 1
-                ,Opmerking        VARCHAR(255)
-                ,DatumAangemaakt  DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,DatumGewijzigd   DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,CONSTRAINT fk_voertuig_typevoertuig FOREIGN KEY (TypeVoertuigId) REFERENCES TypeVoertuig(Id)
+                ,LicensePlate     VARCHAR(10)  NOT NULL UNIQUE
+                ,Model            VARCHAR(50)  NOT NULL
+                ,YearOfManufacture DATE        NOT NULL
+                ,FuelType         VARCHAR(20)  NOT NULL 
+                ,VehicleTypeId    INTEGER      NOT NULL
+                ,IsActive         BOOLEAN      NOT NULL DEFAULT 1
+                ,Remark           VARCHAR(255)
+                ,CreatedDate      DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,ModifiedDate     DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,CONSTRAINT fk_vehicle_vehicletype FOREIGN KEY (VehicleTypeId) REFERENCES VehicleType(Id)
             )
         ');
 
         DB::statement('
-            CREATE TABLE IF NOT EXISTS Instructeur (
+            CREATE TABLE IF NOT EXISTS Instructor (
                 Id              INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-                ,Voornaam        VARCHAR(50)  NOT NULL
-                ,Tussenvoegsel   VARCHAR(20)
-                ,Achternaam      VARCHAR(100) NOT NULL
-                ,Mobiel          VARCHAR(15)  NOT NULL UNIQUE
-                ,DatumInDienst   DATE         NOT NULL
-                ,AantalSterren   INTEGER      NOT NULL DEFAULT 1 CHECK (AantalSterren BETWEEN 1 AND 5)
-                ,IsActief        BOOLEAN      NOT NULL DEFAULT 1
-                ,Opmerking       VARCHAR(255)
-                ,DatumAangemaakt DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,DatumGewijzigd  DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,FirstName       VARCHAR(50)  NOT NULL
+                ,MiddleName      VARCHAR(20)
+                ,LastName        VARCHAR(100) NOT NULL
+                ,Mobile          VARCHAR(15)  NOT NULL UNIQUE
+                ,StartDate       DATE         NOT NULL
+                ,NumberOfStars   INTEGER      NOT NULL DEFAULT 1 CHECK (NumberOfStars BETWEEN 1 AND 5)
+                ,IsActive        BOOLEAN      NOT NULL DEFAULT 1
+                ,Remark          VARCHAR(255)
+                ,CreatedDate     DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,ModifiedDate    DATETIME(6)  NOT NULL DEFAULT NOW(6)
             )
         ');
 
         DB::statement('
-            CREATE TABLE IF NOT EXISTS VoertuigInstructeur (
+            CREATE TABLE IF NOT EXISTS VehicleInstructor (
                 Id              INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT
-                ,VoertuigId      INTEGER NOT NULL
-                ,InstructeurId   INTEGER NOT NULL
-                ,DatumToekenning DATE    NOT NULL
-                ,IsActief        BOOLEAN NOT NULL DEFAULT 1
-                ,Opmerking       VARCHAR(255)
-                ,DatumAangemaakt DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,DatumGewijzigd  DATETIME(6)  NOT NULL DEFAULT NOW(6)
-                ,CONSTRAINT fk_vi_voertuig FOREIGN KEY (VoertuigId) REFERENCES Voertuig(Id)
-                ,CONSTRAINT fk_vi_instructeur FOREIGN KEY (InstructeurId) REFERENCES Instructeur(Id)
-                ,CONSTRAINT uq_voertuig_instructeur_datum UNIQUE (VoertuigId, InstructeurId, DatumToekenning)
+                ,VehicleId       INTEGER NOT NULL
+                ,InstructorId    INTEGER NOT NULL
+                ,AssignmentDate  DATE    NOT NULL
+                ,IsActive        BOOLEAN NOT NULL DEFAULT 1
+                ,Remark          VARCHAR(255)
+                ,CreatedDate     DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,ModifiedDate    DATETIME(6)  NOT NULL DEFAULT NOW(6)
+                ,CONSTRAINT fk_vi_vehicle FOREIGN KEY (VehicleId) REFERENCES Vehicle(Id)
+                ,CONSTRAINT fk_vi_instructor FOREIGN KEY (InstructorId) REFERENCES Instructor(Id)
+                ,CONSTRAINT uq_vehicle_instructor_date UNIQUE (VehicleId, InstructorId, AssignmentDate)
             )
         ');
 
         DB::statement('
-            INSERT INTO TypeVoertuig (Id, TypeVoertuig, Rijbewijscategorie, DatumAangemaakt, DatumGewijzigd)
+            INSERT INTO VehicleType (Id, VehicleType, LicenseCategory, CreatedDate, ModifiedDate)
             VALUES
                 (1, \'Personenauto\', \'B\', NOW(6), NOW(6))
                 ,(2, \'Vrachtwagen\', \'C\', NOW(6), NOW(6))
@@ -80,7 +80,7 @@ return new class extends Migration
         ');
 
         DB::statement('
-            INSERT INTO Voertuig (Id, Kenteken, Type, Bouwjaar, Brandstof, TypeVoertuigId, DatumAangemaakt, DatumGewijzigd)
+            INSERT INTO Vehicle (Id, LicensePlate, Model, YearOfManufacture, FuelType, VehicleTypeId, CreatedDate, ModifiedDate)
             VALUES
                 (1, \'AU-67-IO\', \'Golf\', \'2017-06-12\', \'Diesel\', 1, NOW(6), NOW(6))
                 ,(2, \'TR-24-OP\', \'DAF\', \'2019-05-23\', \'Diesel\', 2, NOW(6), NOW(6))
@@ -97,7 +97,7 @@ return new class extends Migration
         ');
 
         DB::statement('
-            INSERT INTO Instructeur (Id, Voornaam, Tussenvoegsel, Achternaam, Mobiel, DatumInDienst, AantalSterren, DatumAangemaakt, DatumGewijzigd)
+            INSERT INTO Instructor (Id, FirstName, MiddleName, LastName, Mobile, StartDate, NumberOfStars, CreatedDate, ModifiedDate)
             VALUES
                 (1, \'Li\', NULL, \'Zhan\', \'06-28493827\', \'2015-04-17\', 3, NOW(6), NOW(6))
                 ,(2, \'Leroy\', NULL, \'Boerhaven\', \'06-39398734\', \'2018-06-25\', 1, NOW(6), NOW(6))
@@ -107,7 +107,7 @@ return new class extends Migration
         ');
 
         DB::statement('
-            INSERT INTO VoertuigInstructeur (Id, VoertuigId, InstructeurId, DatumToekenning, DatumAangemaakt, DatumGewijzigd)
+            INSERT INTO VehicleInstructor (Id, VehicleId, InstructorId, AssignmentDate, CreatedDate, ModifiedDate)
             VALUES
                 (1, 1, 5, \'2017-06-18\', NOW(6), NOW(6))
                 ,(2, 3, 1, \'2021-09-26\', NOW(6), NOW(6))
@@ -123,9 +123,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement('DROP TABLE IF EXISTS VoertuigInstructeur');
-        DB::statement('DROP TABLE IF EXISTS Voertuig');
-        DB::statement('DROP TABLE IF EXISTS Instructeur');
-        DB::statement('DROP TABLE IF EXISTS TypeVoertuig');
+        DB::statement('DROP TABLE IF EXISTS VehicleInstructor');
+        DB::statement('DROP TABLE IF EXISTS Vehicle');
+        DB::statement('DROP TABLE IF EXISTS Instructor');
+        DB::statement('DROP TABLE IF EXISTS VehicleType');
     }
 };
