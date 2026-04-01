@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Instructor extends Model
 {
@@ -20,4 +21,8 @@ class Instructor extends Model
         'CreatedDate',
         'ModifiedDate'
     ];
+
+    public function InstructorCount() { 
+        return DB::statement('CALL sp_InstructorsCount()');
+    }
 }
