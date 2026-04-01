@@ -5,7 +5,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_InstructorsCount()
 BEGIN
     SELECT COUNT(*) AS InstructorsCount
-    FROM Instructors;
+    FROM Instructor;
 END $$
 
 DELIMITER ;
