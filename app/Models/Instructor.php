@@ -26,4 +26,14 @@ class Instructor extends Model
     {
         return DB::selectOne('CALL sp_InstructorsCount()');
     }
+
+    public static function getAllInstructors(): array
+    {
+        return DB::select('CALL sp_GetAllInstructors()');
+    }
+
+    public function GetAllInstructorVehicles($instructorId): array
+    {
+        return DB::select('CALL sp_GetAllInstructorVehicles(?)', [$instructorId]);
+    }
 }

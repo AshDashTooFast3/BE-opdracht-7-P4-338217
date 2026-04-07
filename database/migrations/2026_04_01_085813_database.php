@@ -38,7 +38,7 @@ return new class extends Migration
             )
         ');
 
-        DB::statement('
+        DB::statement("
             CREATE TABLE IF NOT EXISTS Instructor (
                 Id              INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
                 ,FirstName       VARCHAR(50)  NOT NULL
@@ -46,13 +46,13 @@ return new class extends Migration
                 ,LastName        VARCHAR(100) NOT NULL
                 ,Mobile          VARCHAR(15)  NOT NULL UNIQUE
                 ,StartDate       DATE         NOT NULL
-                ,NumberOfStars   INTEGER      NOT NULL DEFAULT 1 CHECK (NumberOfStars BETWEEN 1 AND 5)
+                ,NumberOfStars   VARCHAR(5)   NOT NULL DEFAULT '*' CHECK (NumberOfStars IN ('*', '**', '***', '****', '*****'))
                 ,IsActive        BOOLEAN      NOT NULL DEFAULT 1
                 ,Remark          VARCHAR(255)
                 ,CreatedDate     DATETIME(6)  NOT NULL DEFAULT NOW(6)
                 ,ModifiedDate    DATETIME(6)  NOT NULL DEFAULT NOW(6)
             )
-        ');
+        ");
 
         DB::statement('
             CREATE TABLE IF NOT EXISTS VehicleInstructor (
@@ -99,11 +99,11 @@ return new class extends Migration
         DB::statement('
             INSERT INTO Instructor (Id, FirstName, MiddleName, LastName, Mobile, StartDate, NumberOfStars, CreatedDate, ModifiedDate)
             VALUES
-                (1, \'Li\', NULL, \'Zhan\', \'06-28493827\', \'2015-04-17\', 3, NOW(6), NOW(6))
-                ,(2, \'Leroy\', NULL, \'Boerhaven\', \'06-39398734\', \'2018-06-25\', 1, NOW(6), NOW(6))
-                ,(3, \'Yoeri\', \'Van\', \'Veen\', \'06-24383291\', \'2010-05-12\', 3, NOW(6), NOW(6))
-                ,(4, \'Bert\', \'Van\', \'Sali\', \'06-48293823\', \'2023-01-10\', 4, NOW(6), NOW(6))
-                ,(5, \'Mohammed\', \'El\', \'Yassidi\', \'06-34291234\', \'2010-06-14\', 5, NOW(6), NOW(6))
+                (1, \'Li\', NULL, \'Zhan\', \'06-28493827\', \'2015-04-17\', \'***\', NOW(6), NOW(6))
+                ,(2, \'Leroy\', NULL, \'Boerhaven\', \'06-39398734\', \'2018-06-25\', \'*\', NOW(6), NOW(6))
+                ,(3, \'Yoeri\', \'Van\', \'Veen\', \'06-24383291\', \'2010-05-12\', \'***\', NOW(6), NOW(6))
+                ,(4, \'Bert\', \'Van\', \'Sali\', \'06-48293823\', \'2023-01-10\', \'****\', NOW(6), NOW(6))
+                ,(5, \'Mohammed\', \'El\', \'Yassidi\', \'06-34291234\', \'2010-06-14\', \'*****\', NOW(6), NOW(6))
         ');
 
         DB::statement('

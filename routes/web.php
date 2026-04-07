@@ -12,6 +12,10 @@ Route::get('/dashboard', [InstructorController::class, 'index'])
 ->middleware(['auth', 'verified'])
 ->name('dashboard');
 
+Route::get('/instructor/details/{instructorId}', [InstructorController::class, 'details'])
+->middleware(['auth', 'verified'])
+->name('instructor.details');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -80,11 +80,11 @@ VALUES
 
 INSERT INTO Instructor (Id, FirstName, MiddleName, LastName, Mobile, StartDate, NumberOfStars, CreatedDate, ModifiedDate)
 VALUES
-    (1, 'Li', NULL, 'Zhan', '06-28493827', '2015-04-17', 3, NOW(6), NOW(6))
-    ,(2, 'Leroy', NULL, 'Boerhaven', '06-39398734', '2018-06-25', 1, NOW(6), NOW(6))
-    ,(3, 'Yoeri', 'Van', 'Veen', '06-24383291', '2010-05-12', 3, NOW(6), NOW(6))
-    ,(4, 'Bert', 'Van', 'Sali', '06-48293823', '2023-01-10', 4, NOW(6), NOW(6))
-    ,(5, 'Mohammed', 'El', 'Yassidi', '06-34291234', '2010-06-14', 5, NOW(6), NOW(6));
+    (1, 'Li', NULL, 'Zhan', '06-28493827', '2015-04-17', '***', NOW(6), NOW(6))
+    ,(2, 'Leroy', NULL, 'Boerhaven', '06-39398734', '2018-06-25', '*', NOW(6), NOW(6))
+    ,(3, 'Yoeri', 'Van', 'Veen', '06-24383291', '2010-05-12', '***', NOW(6), NOW(6))
+    ,(4, 'Bert', 'Van', 'Sali', '06-48293823', '2023-01-10', '****', NOW(6), NOW(6))
+    ,(5, 'Mohammed', 'El', 'Yassidi', '06-34291234', '2010-06-14', '*****', NOW(6), NOW(6));
 
 INSERT INTO VehicleInstructor (Id, VehicleId, InstructorId, AssignmentDate, CreatedDate, ModifiedDate)
 VALUES
